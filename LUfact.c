@@ -90,6 +90,12 @@ void LUdestroy(LUfact *fact) {
 }
 
 void LUsolve(LUfact *fact, const double *b, double *x) {
-    //Solve for Y (Lower)
+    //Solve for LY = B (Lower)
+    int N = fact->N;
+    for(int i  = 1; i < N; i++){
+        for(int j = 0; j < N-1; j++){
+            
+        }
+    }
     
 }
