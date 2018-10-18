@@ -41,14 +41,14 @@ int main() {
   double x5_soln[5] = {
     263.0/12, 107.0/6, 61.0/20, 139.0/15, 92.0/15
   };
-  for (int i = 0; i < 5; i++) {
+  /*for (int i = 0; i < 5; i++) {
     const double err = x5[i] - x5_soln[i];
     printf("x[i] = %11.7f (%11.7f, error=%0.7e)\n", 
 	   x5[i], x5_soln[i], err);
-  }
+  }*/
   LUdestroy(LU);
 
-  //
+  /*//
   // compute inverse of A10.
   // Solve A*X = I where I is 10x10 identity matrix.
   //
@@ -67,7 +67,7 @@ int main() {
     double b[10];
     for (int j = 0; j < 10; j++)
       b[j] = (i == j) ? 1.0 : 0.0;
-    LUsolve(LU, b, X10[i]);
+    //LUsolve(LU, b, X10[i]);
   }
   printf("checking solution (A*A^-1 = I)...\n");
   double I[10][10];
@@ -81,8 +81,8 @@ int main() {
       const double error  = fabs(sum - ((i == j) ? 1.0 : 0.0));
       if (error > maxError)
 	maxError = error;
-    }
-  printf("max error = %0.12e\n", maxError);
+    }*/
+  //printf("max error = %0.12e\n", maxError);
   /* XXX
   for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 10; j++) {
@@ -91,11 +91,12 @@ int main() {
     printf("\n");
   }
   */
-  LUdestroy(LU);
+  //LUdestroy(LU);
 
   //
   // Big NxN system
   //
+  /*
   const int N = 600;
   printf("solving %dx%d system...\n", N, N);
   double **S = (double **) malloc(N*sizeof(double*));
@@ -111,7 +112,7 @@ int main() {
   for (int i = 0; i < N; i++)
     B[i] = i;
   double *X = (double *) malloc(N*sizeof(double));
-  LUsolve(LU, B, X);
+  //LUsolve(LU, B, X);
   printf("checking solution...\n");
   maxError = 0.0;
   for (int i = 0; i < N; i++) {
@@ -121,9 +122,9 @@ int main() {
     const double error  = fabs(B[i] - sum);
     if (error > maxError)
       maxError = error;
-  }
-  LUdestroy(LU);
-  printf("max error = %0.12e\n", maxError);
+  }*/
+  //LUdestroy(LU);
+  //printf("max error = %0.12e\n", maxError);
   
   return 0;
 }
