@@ -30,6 +30,19 @@ void printMatrix(double** A, int N, short* order){
     }
 }
 
+void printAugMatrix(double** A, int N, short* order, double* x){
+    for(int i = 0; i < N; i++){
+        printf("| ");
+        for(int j = 0; j < N; j++){
+            printf("%.5f ",A[order[i]][j]);
+        }
+        printf("%f, ",x[i]);
+        printf(" | ");
+        printf("\n");
+    }
+    printf("\n");
+}
+
 LUfact *LUfactor(int N, const double **A) {
     LUfact *LU = (LUfact*) malloc(sizeof(LUfact));
     LU->N = N;
@@ -93,11 +106,15 @@ void LUsolve(LUfact *fact, const double *b, double *x) {
     //Solve for LY = B (Lower)
     int N = fact->N;
     double y[N];
+    printf("B: ");
+    for(int n = 0; n < N; n++){
+        printf("%f, ",b[n]);
+    }
+    printf("\n");
     // Copy b into y.
     for(int n = 0; n < N; n++){
-        y[n] = b[n];
+        y[n] = b[fact->mutate[n]];
     }
-    double pivot;
     for(int j = 0; j < N; j++){
         for(int i = j+1; i < N; i++){
             y[i] -= y[j]*fact->LU[fact->mutate[i]][j];
@@ -106,6 +123,25 @@ void LUsolve(LUfact *fact, const double *b, double *x) {
     printf("Y:  ");
     for(int l = 0; l < N; l++){
         printf("%f,",y[l]);
+    }
+    printf("\n\n");
+    // Copy Y into X
+    for(int n = 0; n < N; n++){
+        x[n] = y[n];
+    }
+    for(int i = N-1; i >= 0; i--){
+        printf("next = %f/%f \n",x[i],fact->LU[fact->mutate[i]][i]);
+        x[i] /= fact->LU[fact->mutate[i]][i];
+        for(int j = i-1; j >= 0; j--){
+            x[j] -= x[i]*fact->LU[fact->mutate[j]][i];
+            printAugMatrix(fact->LU, fact->N, fact->mutate,x);
+            fact->LU[fact->mutate[j]][i] = 0;
+        }
+    }
+    printAugMatrix(fact->LU, fact->N, fact->mutate,x);
+    printf("X: ");
+    for(int n = 0; n < N; n++){
+        printf("%f, ",x[n]);
     }
     printf("\n\n");
 

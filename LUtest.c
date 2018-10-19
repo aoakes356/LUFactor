@@ -41,11 +41,11 @@ int main() {
   double x5_soln[5] = {
     263.0/12, 107.0/6, 61.0/20, 139.0/15, 92.0/15
   };
-  /*for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < 5; i++) {
     const double err = x5[i] - x5_soln[i];
     printf("x[i] = %11.7f (%11.7f, error=%0.7e)\n", 
 	   x5[i], x5_soln[i], err);
-  }*/
+  }
   LUdestroy(LU);
 
   /*//
