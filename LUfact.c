@@ -92,10 +92,21 @@ void LUdestroy(LUfact *fact) {
 void LUsolve(LUfact *fact, const double *b, double *x) {
     //Solve for LY = B (Lower)
     int N = fact->N;
-    for(int i  = 1; i < N; i++){
-        for(int j = 0; j < N-1; j++){
-            
+    double y[N];
+    // Copy b into y.
+    for(int n = 0; n < N; n++){
+        y[n] = b[n];
+    }
+    double pivot;
+    for(int j = 0; j < N; j++){
+        for(int i = j+1; i < N; i++){
+            y[i] -= y[j]*fact->LU[fact->mutate[i]][j];
         }
     }
-    
+    printf("Y:  ");
+    for(int l = 0; l < N; l++){
+        printf("%f,",y[l]);
+    }
+    printf("\n\n");
+
 }
